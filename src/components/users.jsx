@@ -7,9 +7,25 @@ const Users = () => {
     setUsers((prevState) => prevState.filter((user) => user._id !== userId));
   };
 
-  const renderPhrase = (number) => {};
-  return (
+  const renderPhrase = (number) => {
+    if (number % 100 >= 12 && number % 100 <= 21) {
+      return (
+        <span className="badge bg-primary fs-5">{`${number} человек тусанет с тобой сегодня`}</span>
+      );
+    } else if (number % 10 >= 2 && number % 10 <= 4) {
+      return (
+        <span className="badge bg-primary fs-5">{`${number} человека тусанут с тобой сегодня`}</span>
+      );
+    } else {
+      return (
+        <span className="badge bg-primary fs-5">{`${number} человек тусанет с тобой сегодня`}</span>
+      );
+    }
+  };
+
+  return users.length !== 0 ? (
     <>
+      {renderPhrase(users.length)}
       <table className="table">
         <thead>
           <tr>
@@ -52,6 +68,8 @@ const Users = () => {
         </tbody>
       </table>
     </>
+  ) : (
+    <span className="badge bg-danger fs-5">Ни кто с тобой не тусанет</span>
   );
 };
 
