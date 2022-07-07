@@ -3,7 +3,9 @@ import api from '../api';
 
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
-  const handleDelete = (userId) => {};
+  const handleDelete = (userId) => {
+    setUsers((prevState) => prevState.filter((user) => user._id !== userId));
+  };
 
   const renderPhrase = (number) => {};
   return (
