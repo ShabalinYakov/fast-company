@@ -18,12 +18,7 @@ const Users = ({ users, ...rest }) => {
           </thead>
           <tbody>
             {users.map((user) => (
-              <User
-                key={user._id}
-                user={user}
-                onDelete={rest.onDelete}
-                onToggleBookMark={rest.onToggleBookMark}
-              />
+              <User key={user._id} user={user} {...rest} />
             ))}
           </tbody>
         </table>

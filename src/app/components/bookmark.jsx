@@ -1,8 +1,9 @@
 const BookMark = ({ status, ...rest }) => {
   return (
-    <button className="bi bi-bookmark">
-      {/* <i class="bi bi-bookmark-heart-fill"></i> */}
-    </button>
+    <button
+      className={`bi ${status ? 'bi-bookmark-heart-fill' : 'bi-bookmark'}`}
+      onClick={() => rest.onToggleBookMark(rest.id)}
+    ></button>
   );
 };
 

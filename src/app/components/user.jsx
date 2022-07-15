@@ -20,7 +20,11 @@ const User = ({ user, ...rest }) => {
         <td>{user.completedMeetings}</td>
         <td>{user.rate} /5</td>
         <td>
-          <BookMark />
+          <BookMark
+            status={user.bookmark}
+            id={user._id}
+            onToggleBookMark={rest.onToggleBookMark}
+          />
         </td>
         <td>
           <button
@@ -34,4 +38,5 @@ const User = ({ user, ...rest }) => {
     </>
   );
 };
+
 export default User;

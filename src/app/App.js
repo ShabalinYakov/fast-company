@@ -9,7 +9,24 @@ const App = () => {
   const handleDelete = (userId) => {
     setUsers(users.filter((user) => user._id !== userId));
   };
-  const handleToggleBookMark = (id) => {};
+  const handleToggleBookMark = (id) => {
+    const newUsers = users.map((user) => {
+      if (user._id === id && !user.bookmark) {
+        return {
+          ...user,
+          bookmark: true,
+        };
+      } else if (user._id === id && user.bookmark) {
+        return {
+          ...user,
+          bookmark: false,
+        };
+      } else {
+        return user;
+      }
+    });
+    setUsers(newUsers);
+  };
 
   return (
     <div>

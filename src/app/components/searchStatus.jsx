@@ -6,6 +6,7 @@ const SearchStatus = ({ length }) => {
     if (lastOne === 1) return 'человек тусанет';
     return 'человек тусанет';
   };
+
   return (
     <h2>
       <span className={'badge ' + (length > 0 ? 'bg-primary' : 'bg-danger')}>
@@ -16,4 +17,5 @@ const SearchStatus = ({ length }) => {
     </h2>
   );
 };
+
 export default SearchStatus;
