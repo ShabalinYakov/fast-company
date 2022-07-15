@@ -39,6 +39,7 @@ const Users = () => {
               <th scope="col">Профессия</th>
               <th scope="col">Встретился, раз</th>
               <th scope="col">Оценка</th>
+              <th scope="col">Избранное</th>
               <th />
             </tr>
           </thead>
@@ -59,6 +60,11 @@ const Users = () => {
                 <td>{user.profession.name}</td>
                 <td>{user.completedMeetings}</td>
                 <td>{user.rate} /5</td>
+                <td>
+                  <button className="bi bi-bookmark">
+                    {/* <i class="bi bi-bookmark-heart-fill"></i> */}
+                  </button>
+                </td>
                 <td>
                   <button
                     onClick={() => handleDelete(user._id)}
