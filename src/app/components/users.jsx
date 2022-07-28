@@ -11,10 +11,12 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfesions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const pageSize = 3;
+    const pageSize = 4;
+
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfesions(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
@@ -26,8 +28,9 @@ const Users = ({ users: allUsers, ...rest }) => {
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
+
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter((user) => user.profession._id === selectedProf._id)
         : allUsers;
     const count = filteredUsers.length;
     const usersCrop = paginate(filteredUsers, currentPage, pageSize);
@@ -48,7 +51,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                         className="btn btn-secondary mt-2"
                         onClick={clearFilter}
                     >
-                        Сброс
+                        Очистить
                     </button>
                 </div>
             )}
