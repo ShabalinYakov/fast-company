@@ -13,6 +13,14 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
         }
     };
 
+    const renderFill = (column) => {
+        if (selectedSort.path === columns[column].path) {
+            return selectedSort.order === "asc"
+                ? "bi bi-caret-up-fill"
+                : "bi bi-caret-down-fill";
+        }
+    };
+
     return (
         <thead>
             <tr>
@@ -28,28 +36,13 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         scope="col"
                     >
                         {columns[column].name}
+                        <i className={renderFill(column)}></i>
                     </th>
                 ))}
-
-                {/* <th scope="col">Качества</th>
-                <th onClick={() => handleSort("profession.name")} scope="col">
-                    Профессия
-                </th>
-                <th onClick={() => handleSort("completedMeetings")} scope="col">
-                    Встретился, раз
-                </th>
-                <th onClick={() => handleSort("rate")} scope="col">
-                    Оценка
-                </th>
-                <th onClick={() => handleSort("bookmark")} scope="col">
-                    Избранное
-                </th>
-                <th /> */}
             </tr>
         </thead>
     );
 };
-
 TableHeader.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
