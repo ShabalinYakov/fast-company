@@ -8,41 +8,40 @@ const GroupList = ({
     onItemSelect,
     selectedItem
 }) => {
-    const renderListFromObject = (items) => {
-        return Object.keys(items).map((item) => (
-            <li
-                key={items[item][valueProperty]}
-                className={
-                    "list-group-item" +
-                    (items[item] === selectedItem ? " active" : "")
-                }
-                onClick={() => onItemSelect(items[item])}
-                role="button"
-            >
-                {items[item][contentProperty]}
-            </li>
-        ));
-    };
-
-    const renderListFromArray = (items) => {
-        return items.map((item) => (
-            <li
-                key={item[valueProperty]}
-                className={
-                    "list-group-item" + (item === selectedItem ? " active" : "")
-                }
-                role="button"
-                onClick={() => onItemSelect(item)}
-            >
-                {item[contentProperty]}
-            </li>
-        ));
-    };
+    if (!Array.isArray(items)) {
+        return (
+            <ul className="list-group">
+                {Object.keys(items).map((item) => (
+                    <li
+                        key={items[item][valueProperty]}
+                        className={
+                            "list-group-item" +
+                            (items[item] === selectedItem ? " active" : "")
+                        }
+                        onClick={() => onItemSelect(items[item])}
+                        role="button"
+                    >
+                        {items[item][contentProperty]}
+                    </li>
+                ))}
+            </ul>
+        );
+    }
     return (
         <ul className="list-group">
-            {Array.isArray(items)
-                ? renderListFromArray(items)
-                : renderListFromObject(items)}
+            {items.map((item) => (
+                <li
+                    key={item[valueProperty]}
+                    className={
+                        "list-group-item" +
+                        (item === selectedItem ? " active" : "")
+                    }
+                    onClick={() => onItemSelect(item)}
+                    role="button"
+                >
+                    {item[contentProperty]}
+                </li>
+            ))}
         </ul>
     );
 };
@@ -57,4 +56,5 @@ GroupList.propTypes = {
     onItemSelect: PropTypes.func,
     selectedItem: PropTypes.object
 };
+
 export default GroupList;
