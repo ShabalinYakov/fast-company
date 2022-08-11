@@ -7,7 +7,6 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
-
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
@@ -23,18 +22,19 @@ const Users = () => {
         setUsers(users.filter((user) => user._id !== userId));
     };
     const handleToggleBookMark = (id) => {
-        setUsers(
-            users.map((user) => {
-                if (user._id === id) {
-                    return { ...user, bookmark: !user.bookmark };
-                }
-                return user;
-            })
-        );
+        const newArray = users.map((user) => {
+            if (user._id === id) {
+                return { ...user, bookmark: !user.bookmark };
+            }
+            return user;
+        });
+        setUsers(newArray);
     };
+
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
@@ -46,10 +46,10 @@ const Users = () => {
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
-
     const handleSort = (item) => {
         setSortBy(item);
     };
+
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
@@ -60,13 +60,11 @@ const Users = () => {
             : users;
 
         const count = filteredUsers.length;
-
         const sortedUsers = _.orderBy(
             filteredUsers,
             [sortBy.path],
             [sortBy.order]
         );
-
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
         const clearFilter = () => {
             setSelectedProf();
@@ -85,6 +83,7 @@ const Users = () => {
                             className="btn btn-secondary mt-2"
                             onClick={clearFilter}
                         >
+                            {" "}
                             Очистить
                         </button>
                     </div>

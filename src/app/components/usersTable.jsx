@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Bookmark from "./bookmark";
+
+import BookMark from "./bookmark";
 import QualitiesList from "./qualitiesList";
 import Table from "./table";
 
@@ -18,10 +19,7 @@ const UserTable = ({
             name: "Качества",
             component: (user) => <QualitiesList qualities={user.qualities} />
         },
-        professions: {
-            path: "profession.name",
-            name: "Профессии"
-        },
+        professions: { path: "profession.name", name: "Профессия" },
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
@@ -31,7 +29,7 @@ const UserTable = ({
             path: "bookmark",
             name: "Избранное",
             component: (user) => (
-                <Bookmark
+                <BookMark
                     status={user.bookmark}
                     onClick={() => onToggleBookMark(user._id)}
                 />
@@ -65,4 +63,5 @@ UserTable.propTypes = {
     onToggleBookMark: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired
 };
+
 export default UserTable;
