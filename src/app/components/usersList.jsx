@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
-import api from "../api";
-import { paginate } from "../utils/paginate";
-import GroupList from "../components/groupList";
-import UserTable from "../components/usersTable";
-import Pagination from "../components/pagination";
 import SearchStatus from "../components/searchStatus";
+import Pagination from "../components/pagination";
+import UserTable from "../components/usersTable";
+import GroupList from "../components/groupList";
+import { paginate } from "../utils/paginate";
+import TextField from "./textField";
+import api from "../api";
+import _ from "lodash";
 
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+    const [searchData, setSearchData] = useState("");
     const pageSize = 8;
 
     const [users, setUsers] = useState();
-    useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
-    }, []);
+
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
+
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {
             if (user._id === id) {
@@ -32,14 +33,19 @@ const Users = () => {
     };
 
     useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
+
+    useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchData]);
 
     const handleProfessionSelect = (item) => {
+        setSearchData("");
         setSelectedProf(item);
     };
 
@@ -50,14 +56,24 @@ const Users = () => {
         setSortBy(item);
     };
 
+    const filter = (data) => {
+        let filteredUsers;
+        const search = new RegExp(searchData, "gi");
+
+        if (searchData) {
+            filteredUsers = users.filter((user) => search.test(user.name));
+        } else {
+            filteredUsers = selectedProf
+                ? users.filter(
+                      (user) => user.profession._id === selectedProf._id
+                  )
+                : users;
+        }
+        return filteredUsers;
+    };
+
     if (users) {
-        const filteredUsers = selectedProf
-            ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
-            : users;
+        const filteredUsers = filter(users);
 
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
@@ -68,6 +84,11 @@ const Users = () => {
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
         const clearFilter = () => {
             setSelectedProf();
+        };
+
+        const handleSearch = ({ target }) => {
+            clearFilter();
+            setSearchData(target.value);
         };
 
         return (
@@ -90,6 +111,14 @@ const Users = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+
+                    <TextField
+                        name="search"
+                        placeholder="Search..."
+                        value={searchData}
+                        onChange={handleSearch}
+                    />
+
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
@@ -99,6 +128,7 @@ const Users = () => {
                             onToggleBookMark={handleToggleBookMark}
                         />
                     )}
+
                     <div className="d-flex justify-content-center">
                         <Pagination
                             itemsCount={count}
