@@ -12,7 +12,7 @@ const UserPage = ({ id }) => {
         api.users.getById(id).then((data) => setUser(data));
     }, []);
 
-    const handleAllUsers = () => {
+    const handleClick = () => {
         history.push("/users");
     };
 
@@ -32,7 +32,7 @@ const UserPage = ({ id }) => {
                 </div>
                 <button
                     className="btn btn-primary ms-2 mt-2"
-                    onClick={handleAllUsers}
+                    onClick={handleClick}
                 >
                     Все пользователи
                 </button>
