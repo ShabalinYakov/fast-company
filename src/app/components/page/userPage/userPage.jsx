@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import api from "../../../api";
 import Qualities from "../../ui/qualities";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import api from "../../../api";
 
 const UserPage = ({ id }) => {
-    const history = useHistory();
     const [user, setUser] = useState();
 
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
     }, []);
-
-    const handleClick = () => {
-        history.push("/users");
-    };
 
     if (user) {
         return (
@@ -30,12 +25,11 @@ const UserPage = ({ id }) => {
                     </div>
                     <div className="mt-1">Оценка: {user.rate}</div>
                 </div>
-                <button
-                    className="btn btn-primary ms-2 mt-2"
-                    onClick={handleClick}
-                >
-                    Все пользователи
-                </button>
+                <Link to={`${id}/edit`}>
+                    <button className="btn btn-primary ms-2 mt-2">
+                        Изменить
+                    </button>
+                </Link>
             </>
         );
     }
