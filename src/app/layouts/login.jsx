@@ -1,35 +1,48 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import LoginForm from "../components/ui/loginForm";
+import RegisterForm from "../components/ui/registerForm";
 
 const Login = () => {
-    const [data, setData] = useState({ email: "", password: "" });
-
-    const handleChange = ({ target }) => {
-        setData((prevState) => ({ ...prevState, [target.name]: target.value }));
+    const { type } = useParams();
+    const [formType, setFormType] = useState(
+        type === "register" ? type : "login"
+    );
+    const toogleFormType = () => {
+        setFormType((prevState) =>
+            prevState === "register" ? "login" : "register"
+        );
     };
-
     return (
-        <form action="">
-            <div>
-                <label htmlFor="email">Email</label>
-                <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    value={data.email}
-                    onChange={handleChange}
-                />
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6 offset-md-3 shadow p-4">
+                    {formType === "register" ? (
+                        <>
+                            <h3 className="mb-4">Register</h3>
+                            <RegisterForm />
+                            <p>
+                                Already have account?{" "}
+                                <a role="button" onClick={toogleFormType}>
+                                    Sign In
+                                </a>
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <h3 className="mb-4">Login</h3>
+                            <LoginForm />
+                            <p>
+                                Dont have account?{" "}
+                                <a role="button" onClick={toogleFormType}>
+                                    Sign Up
+                                </a>
+                            </p>
+                        </>
+                    )}
+                </div>
             </div>
-            <div>
-                <label htmlFor="password">Пароль</label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={data.password}
-                    onChange={handleChange}
-                />
-            </div>
-        </form>
+        </div>
     );
 };
 
