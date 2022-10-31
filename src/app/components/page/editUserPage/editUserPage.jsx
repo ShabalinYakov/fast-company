@@ -1,4 +1,5 @@
 import { useHistory, useParams } from "react-router-dom";
+import BackHistoryButton from "../../common/backButton";
 import SelectField from "../../common/form/selectField";
 import MultiSelect from "../../common/form/multiSelect";
 import RadioField from "../../common/form/radioField";
@@ -140,6 +141,7 @@ const EditUserPage = () => {
 
     return (
         <div className="container mt-5">
+            <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
                     {!loading && Object.keys(professions).length > 0 ? (

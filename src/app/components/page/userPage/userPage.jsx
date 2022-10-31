@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import QualitiesCard from "../../ui/qualitiesCard";
+import MeetingsCard from "../../ui/meetingsCard";
+import Comments from "../../ui/comments";
 import UserCard from "../../ui/userCard";
 import PropTypes from "prop-types";
 import api from "../../../api";
-import MeetingsCard from "../../ui/meetingsCard";
 
 const UserPage = ({ id }) => {
     const [user, setUser] = useState();
@@ -21,7 +22,9 @@ const UserPage = ({ id }) => {
                         <QualitiesCard data={user.qualities} />
                         <MeetingsCard value={user.completedMeetings} />
                     </div>
-                    <div className="col-md-8">Comments</div>
+                    <div className="col-md-8">
+                        <Comments />
+                    </div>
                 </div>
             </div>
         );
