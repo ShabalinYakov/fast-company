@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Qualities from "../../ui/qualities";
-import { Link } from "react-router-dom";
+import QualitiesCard from "../../ui/qualitiesCard";
+import MeetingsCard from "../../ui/meetingsCard";
+import Comments from "../../ui/comments";
+import UserCard from "../../ui/userCard";
 import PropTypes from "prop-types";
 import api from "../../../api";
 
@@ -13,24 +15,18 @@ const UserPage = ({ id }) => {
 
     if (user) {
         return (
-            <>
-                <div className="m-3">
-                    <h1>{user.name}</h1>
-                    <h3>Профессия: {user.profession.name}</h3>
-                    <div>
-                        <Qualities qualities={user.qualities} />
+            <div className="container">
+                <div className="row gutters-sm">
+                    <div className="col-md-4 mb-3">
+                        <UserCard user={user} />
+                        <QualitiesCard data={user.qualities} />
+                        <MeetingsCard value={user.completedMeetings} />
                     </div>
-                    <div className="mt-1">
-                        Встретился, раз: {user.completedMeetings}
+                    <div className="col-md-8">
+                        <Comments />
                     </div>
-                    <div className="mt-1">Оценка: {user.rate}</div>
                 </div>
-                <Link to={`${id}/edit`}>
-                    <button className="btn btn-primary ms-2 mt-2">
-                        Изменить
-                    </button>
-                </Link>
-            </>
+            </div>
         );
     }
     return <h1>Loading</h1>;
