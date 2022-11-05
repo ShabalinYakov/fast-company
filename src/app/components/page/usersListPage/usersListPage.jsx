@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { paginate } from "../../../utils/paginate";
+import { useUser } from "../../../hooks/useUsers";
 import SearchStatus from "../../ui/searchStatus";
 import Pagination from "../../common/pagination";
-import UserTable from "../../ui/usersTable";
 import GroupList from "../../common/groupList";
-import { paginate } from "../../../utils/paginate";
+import UserTable from "../../ui/usersTable";
 import PropTypes from "prop-types";
 import api from "../../../api";
 import _ from "lodash";
@@ -16,12 +17,12 @@ const UsersList = () => {
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
-    const [users, setUsers] = useState();
-    useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
-    }, []);
+    const { users } = useUser();
+    console.log(users);
+
     const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user._id !== userId));
+        // setUsers(users.filter((user) => user._id !== userId));
+        console.log(userId);
     };
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {
@@ -30,7 +31,8 @@ const UsersList = () => {
             }
             return user;
         });
-        setUsers(newArray);
+        // setUsers(newArray);
+        console.log(newArray);
     };
 
     useEffect(() => {
