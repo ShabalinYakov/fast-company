@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import BookMark from "../common/bookmark";
-import Qualities from "../ui/qualities";
+import Qualities from "./qualities";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 import Profession from "./profession";
@@ -11,7 +12,8 @@ const UserTable = ({
     onSort,
     selectedSort,
     onToggleBookMark,
-    onDelete
+    onDelete,
+    ...rest
 }) => {
     const columns = {
         name: {

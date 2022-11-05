@@ -1,24 +1,21 @@
-import { validator } from "../../../utils/validator";
 import React, { useEffect, useState } from "react";
-import TextAreaField from "../form/textAreaField";
-import SelectField from "../form/selectField";
-import PropTypes from "prop-types";
 import API from "../../../api";
-
+import SelectField from "../form/selectField";
+import TextAreaField from "../form/textAreaField";
+import { validator } from "../../../utils/validator";
+import PropTypes from "prop-types";
 const initialData = { userId: "", content: "" };
 
 const AddCommentForm = ({ onSubmit }) => {
     const [data, setData] = useState(initialData);
     const [users, setUsers] = useState({});
     const [errors, setErrors] = useState({});
-
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
     };
-
     const validatorConfig = {
         userId: {
             isRequired: {
@@ -35,19 +32,15 @@ const AddCommentForm = ({ onSubmit }) => {
     const validate = () => {
         const errors = validator(data, validatorConfig);
         setErrors(errors);
-
         return Object.keys(errors).length === 0;
     };
-
     useEffect(() => {
         API.users.fetchAll().then(setUsers);
     }, []);
-
     const clearForm = () => {
         setData(initialData);
         setErrors({});
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
@@ -55,14 +48,12 @@ const AddCommentForm = ({ onSubmit }) => {
         onSubmit(data);
         clearForm();
     };
-
     const arrayOfUsers =
         users &&
         Object.keys(users).map((userId) => ({
             label: users[userId].name,
             value: users[userId]._id
         }));
-
     return (
         <div>
             <h2>New comment</h2>

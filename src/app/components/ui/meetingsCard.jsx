@@ -1,6 +1,5 @@
-import PropTypes from "prop-types";
 import React from "react";
-
+import PropTypes from "prop-types";
 const MeetingsCard = ({ value }) => {
     return (
         <div className="card mb-3">
