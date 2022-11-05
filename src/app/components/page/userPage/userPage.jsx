@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import api from "../../../api";
+import UserCard from "../../ui/userCard";
 import QualitiesCard from "../../ui/qualitiesCard";
 import MeetingsCard from "../../ui/meetingsCard";
 import Comments from "../../ui/comments";
-import UserCard from "../../ui/userCard";
-import PropTypes from "prop-types";
-import api from "../../../api";
 
-const UserPage = ({ id }) => {
+const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
-
     useEffect(() => {
-        api.users.getById(id).then((data) => setUser(data));
+        api.users.getById(userId).then((data) => setUser(data));
     }, []);
-
     if (user) {
         return (
             <div className="container">
@@ -28,12 +26,13 @@ const UserPage = ({ id }) => {
                 </div>
             </div>
         );
+    } else {
+        return <h1>Loading</h1>;
     }
-    return <h1>Loading</h1>;
 };
 
 UserPage.propTypes = {
-    id: PropTypes.string.isRequired
+    userId: PropTypes.string.isRequired
 };
 
 export default UserPage;
