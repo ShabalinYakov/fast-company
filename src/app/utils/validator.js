@@ -1,6 +1,5 @@
 export function validator(data, config) {
     const errors = {};
-
     function validate(validateMethod, data, config) {
         let statusValidate;
         switch (validateMethod) {
@@ -23,8 +22,8 @@ export function validator(data, config) {
                 break;
             }
             case "isContainDigit": {
-                const containDigit = /\d+/g;
-                statusValidate = !containDigit.test(data);
+                const digitRegExp = /\d+/g;
+                statusValidate = !digitRegExp.test(data);
                 break;
             }
             case "min": {

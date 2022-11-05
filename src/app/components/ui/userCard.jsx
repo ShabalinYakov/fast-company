@@ -1,13 +1,11 @@
-import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
 import React from "react";
-
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 const UserCard = ({ user }) => {
     const history = useHistory();
     const handleClick = () => {
         history.push(history.location.pathname + "/edit");
     };
-
     return (
         <div className="card mb-3">
             <div className="card-body">
