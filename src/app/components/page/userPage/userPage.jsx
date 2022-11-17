@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import api from "../../../api";
-import UserCard from "../../ui/userCard";
+import { CommentsProvider } from "../../../hooks/useComments";
 import QualitiesCard from "../../ui/qualitiesCard";
+import { useUser } from "../../../hooks/useUsers";
 import MeetingsCard from "../../ui/meetingsCard";
+import UserCard from "../../ui/userCard";
 import Comments from "../../ui/comments";
+import PropTypes from "prop-types";
+import React from "react";
 
 const UserPage = ({ userId }) => {
-    const [user, setUser] = useState();
-    useEffect(() => {
-        api.users.getById(userId).then((data) => setUser(data));
-    }, []);
+    const { getUserById } = useUser();
+    const user = getUserById(userId);
     if (user) {
         return (
             <div className="container">
@@ -21,7 +20,9 @@ const UserPage = ({ userId }) => {
                         <MeetingsCard value={user.completedMeetings} />
                     </div>
                     <div className="col-md-8">
-                        <Comments />
+                        <CommentsProvider>
+                            <Comments />
+                        </CommentsProvider>
                     </div>
                 </div>
             </div>
