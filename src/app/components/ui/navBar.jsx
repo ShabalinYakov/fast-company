@@ -1,24 +1,46 @@
-import React from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import NavProfile from "./navProfile";
+import React from "react";
+
 const NavBar = () => {
+    const { currentUser } = useAuth();
     return (
-        <ul className="nav">
-            <li className="nav-item">
-                <Link className="nav-link " aria-current="page" to="/">
-                    Main
-                </Link>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link " aria-current="page" to="/login">
-                    Login
-                </Link>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link " aria-current="page" to="/users">
-                    Users
-                </Link>
-            </li>
-        </ul>
+        <nav className="navbar bg-light mb-3">
+            <div className="container-fluid">
+                <ul className="nav">
+                    <li className="nav-item">
+                        <Link className="nav-link " aria-current="page" to="/">
+                            Main
+                        </Link>
+                    </li>
+                    {currentUser && (
+                        <li className="nav-item">
+                            <Link
+                                className="nav-link "
+                                aria-current="page"
+                                to="/users"
+                            >
+                                Users
+                            </Link>
+                        </li>
+                    )}
+                </ul>
+                <div className="d-flex">
+                    {currentUser ? (
+                        <NavProfile />
+                    ) : (
+                        <Link
+                            className="nav-link "
+                            aria-current="page"
+                            to="/login"
+                        >
+                            Login
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </nav>
     );
 };
 
