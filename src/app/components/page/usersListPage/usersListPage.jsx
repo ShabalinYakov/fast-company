@@ -1,19 +1,24 @@
-import { useProfessions } from "../../../hooks/useProfession";
-import React, { useState, useEffect } from "react";
-import { paginate } from "../../../utils/paginate";
-import { useUser } from "../../../hooks/useUsers";
-import Pagination from "../../common/pagination";
-import SearchStatus from "../../ui/searchStatus";
-import GroupList from "../../common/groupList";
-import UserTable from "../../ui/usersTable";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { paginate } from "../../../utils/paginate";
+import Pagination from "../../common/pagination";
+import GroupList from "../../common/groupList";
+import SearchStatus from "../../ui/searchStatus";
+import UserTable from "../../ui/usersTable";
 import _ from "lodash";
+import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions";
 
 const UsersListPage = () => {
     const { users } = useUser();
     const { currentUser } = useAuth();
-    const { isLoading: professionsLoading, professions } = useProfessions();
+    const professions = useSelector(getProfessions());
+    const professionsLoading = useSelector(getProfessionsLoadingStatus());
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
@@ -71,7 +76,7 @@ const UsersListPage = () => {
                           JSON.stringify(selectedProf)
                   )
                 : data;
-            return filteredUsers.filter((user) => user._id !== currentUser._id);
+            return filteredUsers.filter((u) => u._id !== currentUser._id);
         }
         const filteredUsers = filterUsers(users);
         const count = filteredUsers.length;
