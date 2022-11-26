@@ -1,14 +1,15 @@
+import MultiSelectField from "../common/form/multiSelectField";
+import { useProfessions } from "../../hooks/useProfession";
+import CheckBoxField from "../common/form/checkBoxField";
+import { getQualities } from "../../store/qualities";
+import SelectField from "../common/form/selectField";
+import RadioField from "../common/form/radioField";
 import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
-import SelectField from "../common/form/selectField";
-import RadioField from "../common/form/radioField";
-import MultiSelectField from "../common/form/multiSelectField";
-import CheckBoxField from "../common/form/checkBoxField";
-import { useQualities } from "../../hooks/useQualities";
-import { useProfessions } from "../../hooks/useProfession";
-import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const RegisterForm = () => {
     const history = useHistory();
@@ -22,7 +23,7 @@ const RegisterForm = () => {
         licence: false
     });
     const { signUp } = useAuth();
-    const { qualities } = useQualities();
+    const qualities = useSelector(getQualities());
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id

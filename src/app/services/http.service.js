@@ -7,7 +7,6 @@ import axios from "axios";
 const http = axios.create({
     baseURL: configFile.apiEndpoint
 });
-// https://securetoken.googleapis.com/v1/token
 http.interceptors.request.use(
     async function (config) {
         if (configFile.isFireBase) {

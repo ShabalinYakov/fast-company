@@ -1,6 +1,5 @@
 import MultiSelectField from "../../common/form/multiSelectField";
 import { useProfessions } from "../../../hooks/useProfession";
-import { useQualities } from "../../../hooks/useQualities";
 import SelectField from "../../common/form/selectField";
 import BackHistoryButton from "../../common/backButton";
 import RadioField from "../../common/form/radioField";
@@ -9,6 +8,11 @@ import TextField from "../../common/form/textField";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
 
 const EditUserPage = () => {
     const history = useHistory();
@@ -16,7 +20,8 @@ const EditUserPage = () => {
     const [errors, setErrors] = useState({});
     const [isLoading, setLoading] = useState(true);
     const { currentUser, updateUserProfile } = useAuth();
-    const { qualities, isLoading: qualityLoading } = useQualities();
+    const qualities = useSelector(getQualities());
+    const qualityLoading = useSelector(getQualitiesLoadingStatus());
     const { professions, isLoading: profLoading } = useProfessions();
 
     const listOfQualities = qualities.map((quality) => ({
